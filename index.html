@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Wedding of Faaiqoh & Habibi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EAF8E4; --panel:#FFFFFF; --bg-soft:#F6FCF3; --border:#D6E4D0;
+  --green:#7B8C7B; --green-dark:#647764; --leaf:#879B7B; --leaf-light:#AFC09D;
+  --pink:#E88B91; --pink-light:#F4B8B5; --pink-pale:#F9D5D0; --cream:#F4E7D3;
+  --script:'Alex Brush', cursive; --sans:'Jost', sans-serif;
+}
+:root{color-scheme: light;}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth; scroll-padding-top:env(safe-area-inset-top,0px);}
+body{
+  font-family:var(--sans); background:var(--bg); color:var(--green-dark);
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  overflow-x:hidden;
+}
+.wrap{max-width:520px; margin:0 auto; position:relative;}
+.section{padding:56px 28px; text-align:center;}
+.panel{background:var(--panel); border-radius:18px; padding:36px 22px; border:1px solid var(--border);}
+h1,h2{font-family:var(--script); color:var(--green-dark); font-weight:400;}
+h1{font-size:52px; line-height:1.15;}
+h2{font-size:38px; margin-bottom:6px;}
+h3{font-family:var(--script); font-size:28px; color:var(--green-dark); margin-bottom:14px;}
+p{font-size:14.5px; line-height:1.9; color:var(--green);}
+.eyebrow{font-size:13px; letter-spacing:2px; text-transform:uppercase; color:var(--leaf);}
+.divider{width:46px; height:1px; background:var(--border); margin:18px auto;}
+a{color:var(--pink); text-decoration:none;}
+.btn{
+  display:inline-flex; align-items:center; gap:8px; font-family:var(--sans); font-size:14px;
+  padding:13px 26px; border-radius:30px; border:1px solid var(--green-dark); color:var(--green-dark);
+  background:transparent; cursor:pointer; margin-top:10px;
+}
+.btn.solid{background:var(--pink); border-color:var(--pink); color:#fff;}
+.btn:active{transform:scale(0.97);}
+
+/* COVER */
+#cover{
+  position:fixed; inset:0; z-index:50; background:linear-gradient(180deg,var(--bg) 0%,var(--bg-soft) 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  padding:32px; transition:opacity .7s ease, visibility .7s ease;
+}
+#cover.hide{opacity:0; visibility:hidden; pointer-events:none;}
+#cover .frame{border:1px solid var(--border); border-radius:16px; padding:44px 24px; max-width:360px; background:rgba(255,255,255,0.5);}
+#cover .monogram{font-family:var(--script); font-size:44px; color:var(--pink); margin-bottom:6px;}
+#cover .names{font-family:var(--script); font-size:40px; margin:10px 0;}
+#cover .date{font-size:13px; letter-spacing:2px; color:var(--leaf);}
+#cover .guest-box{margin-top:26px; border-top:1px solid var(--border); padding-top:18px;}
+#cover .guest-name{font-size:16px; font-weight:500; color:var(--green-dark); margin-top:4px;}
+
+/* HERO */
+#hero{padding-top:72px;}
+#hero .names{font-size:46px;}
+#hero .date{font-size:14px; letter-spacing:1px; color:var(--leaf); margin-top:6px;}
+
+/* AYAT */
+.ayat{font-family:var(--sans); font-style:italic; font-size:14px; line-height:1.9;}
+
+/* MEMPELAI */
+.pair{margin:22px 0;}
+.pair small{display:block; font-size:12.5px; color:var(--leaf); margin-top:4px; line-height:1.7;}
+.amp{font-family:var(--script); font-size:22px; color:var(--pink-light); margin:8px 0;}
+
+/* ACARA */
+.event{margin-bottom:22px;}
+.event .lbl{font-family:var(--script); font-size:24px; color:var(--green-dark);}
+.event .info{font-size:13.5px; color:var(--green); margin-top:6px; line-height:1.8;}
+
+/* COUNTDOWN */
+.cd-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:20px 0;}
+.cd-cell{background:var(--bg-soft); border:1px solid var(--border); border-radius:10px; padding:12px 4px;}
+.cd-num{font-size:22px; font-weight:500; color:var(--pink);}
+.cd-lbl{font-size:10px; letter-spacing:1px; color:var(--leaf); text-transform:uppercase; margin-top:2px;}
+
+/* RSVP */
+#rsvp input,#rsvp select,#rsvp textarea{
+  width:100%; font-family:var(--sans); font-size:14px; padding:11px 14px; border-radius:10px;
+  border:1px solid var(--border); background:var(--bg-soft); color:var(--green-dark); margin-bottom:12px;
+}
+#rsvp textarea{resize:vertical; min-height:70px;}
+#rsvp label{display:block; font-size:12px; color:var(--leaf); text-align:left; margin:0 0 6px 4px;}
+.err{color:#B23A3A; font-size:12px; text-align:left; margin:-8px 0 12px 4px; display:none;}
+
+/* WISHES */
+.wish{background:var(--bg-soft); border:1px solid var(--border); border-radius:10px; padding:12px 14px; text-align:left; margin-bottom:10px;}
+.wish b{font-size:13px; color:var(--green-dark);}
+.wish span{display:block; font-size:12.5px; color:var(--green); margin-top:3px;}
+
+footer{padding:40px 24px 60px; text-align:center;}
+footer .monogram{font-family:var(--script); font-size:30px; color:var(--pink);}
+</style>
+</head>
+<body>
+
+<div id="cover">
+  <div class="frame">
+    <div class="monogram">H &amp; F</div>
+    <p class="eyebrow">The Wedding Of</p>
+    <div class="names">Faaiqoh &amp; Habibi</div>
+    <div class="date">26 &middot; 27 NOVEMBER 2026</div>
+    <div class="guest-box">
+      <p class="eyebrow">Kepada Yth.</p>
+      <div class="guest-name" id="guestName">Bapak/Ibu/Saudara/i</div>
+    </div>
+    <button class="btn solid" onclick="openInvite()">Buka Undangan</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section id="hero" class="section">
+    <p class="eyebrow">The Wedding Of</p>
+    <h1 class="names">Faaiqoh &amp; Habibi</h1>
+    <div class="date">26 &middot; 27 November 2026</div>
+    <div class="divider"></div>
+    <p>Dengan memohon Rahmat dan Ridho Allah SWT, kami bermaksud mengundang Bapak/Ibu/Saudara/i pada pernikahan putra-putri kami.</p>
+  </section>
+
+  <section class="section">
+    <div class="panel">
+      <p class="ayat">"Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."</p>
+      <p style="margin-top:10px; font-weight:500;">QS. Ar-Rum : 21</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="panel">
+      <div class="pair">
+        <h3>Faaiqoh</h3>
+        <small>Putri dari Bpk. H. Muhammad Amin (Alm.)<br>&amp; Ibu Hj. Siti Amiyani (Almh.)</small>
+      </div>
+      <div class="amp">&amp;</div>
+      <div class="pair">
+        <h3>Muhammad Habibi</h3>
+        <small>Putra dari Bpk. Djuaji<br>&amp; Ibu Umi Anisah (Almh.)</small>
+      </div>
+      <div class="divider"></div>
+      <p>Untuk menjalankan syariat agama dan sunnah Rasul, dalam membentuk keluarga yang sakinah, mawaddah, wa rahmah.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="eyebrow">Save the date</p>
+    <div class="cd-grid" id="countdown">
+      <div class="cd-cell"><div class="cd-num" id="cd-d">00</div><div class="cd-lbl">Hari</div></div>
+      <div class="cd-cell"><div class="cd-num" id="cd-h">00</div><div class="cd-lbl">Jam</div></div>
+      <div class="cd-cell"><div class="cd-num" id="cd-m">00</div><div class="cd-lbl">Menit</div></div>
+      <div class="cd-cell"><div class="cd-num" id="cd-s">00</div><div class="cd-lbl">Detik</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="panel">
+      <div class="event">
+        <div class="lbl">Akad Nikah</div>
+        <div class="info">Kamis, 26 November 2026<br>Ba'da Isya &ndash; 19.00 WIB<br>Kempreng No. 4 RT 22/04, Tanjungsari, Taman, Sidoarjo</div>
+      </div>
+      <div class="divider"></div>
+      <div class="event" style="margin-bottom:6px;">
+        <div class="lbl">Resepsi</div>
+        <div class="info">Jumat, 27 November 2026<br>09.00 &ndash; 21.00 WIB<br>Kempreng No. 4 RT 22/04, Tanjungsari, Taman, Sidoarjo</div>
+      </div>
+      <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Kempreng+No.+4+RT+22/04+Tanjungsari+Taman+Sidoarjo" target="_blank" rel="noopener">Buka Google Maps</a><br>
+      <button class="btn" onclick="saveCalendar()">Simpan ke Kalender</button>
+    </div>
+  </section>
+
+  <section id="rsvp" class="section">
+    <p class="eyebrow">Konfirmasi Kehadiran</p>
+    <h2 style="font-size:26px;">RSVP</h2>
+    <div class="panel" style="text-align:left; margin-top:18px;">
+      <label for="rn">Nama</label>
+      <input id="rn" placeholder="Nama lengkap">
+      <p class="err" id="rn-err">Isi nama terlebih dahulu</p>
+
+      <label for="rk">Kehadiran</label>
+      <select id="rk">
+        <option value="Hadir">Insyaallah hadir</option>
+        <option value="Tidak hadir">Maaf, tidak dapat hadir</option>
+        <option value="Ragu">Masih ragu</option>
+      </select>
+
+      <label for="rp">Jumlah tamu</label>
+      <input id="rp" type="number" min="1" value="1">
+
+      <label for="ru">Ucapan &amp; doa</label>
+      <textarea id="ru" placeholder="Tuliskan ucapan dan doa untuk kedua mempelai"></textarea>
+
+      <button class="btn solid" style="width:100%; justify-content:center;" onclick="sendRSVP()">Kirim via WhatsApp</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="panel">
+      <p class="eyebrow" style="margin-bottom:10px;">Bagikan undangan ini</p>
+      <button class="btn" onclick="shareLink()">Salin Tautan</button>
+      <a class="btn" id="waShare" href="#" target="_blank" rel="noopener">Bagikan ke WhatsApp</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="monogram">H &amp; F</div>
+    <p style="margin-top:8px;">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p>
+    <p style="margin-top:10px; font-style:italic;">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+    <p style="margin-top:14px; font-weight:500;">Kami yang berbahagia,<br>Keluarga Besar Kedua Mempelai</p>
+  </footer>
+
+</div>
+
+<script>
+function getGuest(){
+  const p = new URLSearchParams(window.location.search);
+  return p.get('to') ? decodeURIComponent(p.get('to')).replace(/-/g,' ').replace(/\+/g,' ') : '';
+}
+(function(){
+  const g = getGuest();
+  if(g){ document.getElementById('guestName').textContent = g; }
+})();
+
+function openInvite(){
+  document.getElementById('cover').classList.add('hide');
+  document.body.style.overflow = 'auto';
+}
+
+/* countdown to Akad: 26 Nov 2026 19:00 WIB (+07:00) */
+const target = new Date('2026-11-26T19:00:00+07:00').getTime();
+function tick(){
+  const now = Date.now();
+  let diff = target - now;
+  if(diff < 0) diff = 0;
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor((diff%86400000)/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('cd-d').textContent = pad(d);
+  document.getElementById('cd-h').textContent = pad(h);
+  document.getElementById('cd-m').textContent = pad(m);
+  document.getElementById('cd-s').textContent = pad(s);
+}
+tick(); setInterval(tick, 1000);
+
+function saveCalendar(){
+  const ics = [
+    'BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',
+    'SUMMARY:Pernikahan Faaiqoh & Habibi',
+    'DTSTART:20261126T120000Z','DTEND:20261127T140000Z',
+    'LOCATION:Kempreng No. 4 RT 22/04, Tanjungsari, Taman, Sidoarjo',
+    'DESCRIPTION:Akad Nikah Kamis 26 November ba\\'da Isya, Resepsi Jumat 27 November 09.00-21.00 WIB',
+    'END:VEVENT','END:VCALENDAR'
+  ].join('\r\n');
+  const blob = new Blob([ics], {type:'text/calendar'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'Pernikahan-Faaiqoh-Habibi.ics';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function sendRSVP(){
+  const name = document.getElementById('rn').value.trim();
+  const err = document.getElementById('rn-err');
+  if(!name){ err.style.display='block'; return; }
+  err.style.display='none';
+  const hadir = document.getElementById('rk').value;
+  const jumlah = document.getElementById('rp').value;
+  const ucapan = document.getElementById('ru').value.trim();
+  const msg = `Assalamu'alaikum, saya ${name}. Konfirmasi: ${hadir} (${jumlah} orang). Ucapan: ${ucapan || '-'}`;
+  window.open('https://wa.me/6281335041761?text=' + encodeURIComponent(msg), '_blank');
+}
+
+function shareLink(){
+  try{
+    navigator.clipboard.writeText(window.location.href);
+    alert('Tautan undangan disalin');
+  }catch(e){ alert(window.location.href); }
+}
+
+(function(){
+  const waLink = document.getElementById('waShare');
+  const text = 'Undangan pernikahan Faaiqoh & Habibi, 26-27 November 2026: ' + window.location.href;
+  waLink.href = 'https://wa.me/?text=' + encodeURIComponent(text);
+})();
+</script>
+</body>
+</html>
