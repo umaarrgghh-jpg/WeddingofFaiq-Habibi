@@ -13,6 +13,9 @@ const WHATSAPP_NUMBER = "62895396028174";
 const MAIN_INVITATION_URL =
   "https://weddingof-faiq-habibi.vercel.app/";
 
+const GOOGLE_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwyt8yZfaJPK1vss-atWNyJt8_v1vqDJJEJtrFnr01QiNe-MYo34QWtktGnN8d06863TA/exec";
+
 const GUESTS = [
   "Umar",
   "Amin",
@@ -726,22 +729,15 @@ async function shareLink() {
 function renderWishes(wishes) {
 
   const container =
-    document.getElementById(
-      "wishes"
-    );
+    document.getElementById("wishes");
 
 
-  if (
-    !container ||
-    !Array.isArray(wishes)
-  ) {
-
+  if (!container) {
     return;
-
   }
 
 
-  if (wishes.length === 0) {
+  if (!Array.isArray(wishes) || wishes.length === 0) {
 
     container.innerHTML = `
 
@@ -751,11 +747,9 @@ function renderWishes(wishes) {
 
           Belum ada ucapan.
 
-          Jadilah yang pertama
+          Jadilah yang pertama memberikan
 
-          memberikan doa untuk
-
-          kedua mempelai.
+          doa untuk kedua mempelai.
 
         </p>
 
@@ -768,30 +762,232 @@ function renderWishes(wishes) {
   }
 
 
-  container.innerHTML =
+  container.innerHTML = wishes.map(item => `
 
-    wishes.map(item => `
+    <div class="wish">
 
-      <div class="wish">
+      <b>
+        ${escapeHtml(
+          item.nama || "Tamu"
+        )}
+      </b>
 
-        <b>
-          ${escapeHtml(
-            item.nama || "Tamu"
-          )}
-        </b>
+      <span>
+        ${escapeHtml(
+          item.ucapan || ""
+        )}
+      </span>
 
-        <span>
-          ${escapeHtml(
-            item.ucapan || ""
-          )}
-        </span>
+    </div>
 
-      </div>
-
-    `).join("");
+  `).join("");
 
 }
 
+/* =========================================================
+   AMBIL UCAPAN DARI GOOGLE SHEETS
+   ========================================================= */
+
+async function loadWishes() {
+
+  if (
+    !GOOGLE_SCRIPT_URL ||
+    GOOGLE_SCRIPT_URL.includes(
+      "PASTE_URL"
+    )
+  ) {
+
+    console.warn(
+      "Google Apps Script URL belum diatur."
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        GOOGLE_SCRIPT_URL
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      data.success &&
+      Array.isArray(data.wishes)
+    ) {
+
+      renderWishes(
+        data.wishes
+      );
+
+    }
+
+
+  } catch (error) {
+
+    console.error(
+      "Gagal mengambil ucapan:",
+      error
+    );
+
+  }
+
+}
+
+/* =========================================================
+   KIRIM UCAPAN
+   ========================================================= */
+
+async function submitWish() {
+
+  const nameInput =
+    document.getElementById(
+      "wishName"
+    );
+
+  const messageInput =
+    document.getElementById(
+      "wishMessage"
+    );
+
+  const status =
+    document.getElementById(
+      "wishStatus"
+    );
+
+
+  if (
+    !nameInput ||
+    !messageInput ||
+    !status
+  ) {
+
+    return;
+
+  }
+
+
+  const nama =
+    nameInput.value.trim();
+
+
+  const ucapan =
+    messageInput.value.trim();
+
+
+  if (!nama) {
+
+    status.textContent =
+      "Nama wajib diisi.";
+
+    status.style.display =
+      "block";
+
+    nameInput.focus();
+
+    return;
+
+  }
+
+
+  if (!ucapan) {
+
+    status.textContent =
+      "Ucapan wajib diisi.";
+
+    status.style.display =
+      "block";
+
+    messageInput.focus();
+
+    return;
+
+  }
+
+
+  status.textContent =
+    "Mengirim ucapan...";
+
+  status.style.display =
+    "block";
+
+
+  try {
+
+    const body =
+      new URLSearchParams();
+
+
+    body.append(
+      "nama",
+      nama
+    );
+
+
+    body.append(
+      "ucapan",
+      ucapan
+    );
+
+
+    await fetch(
+      GOOGLE_SCRIPT_URL,
+      {
+        method: "POST",
+
+        mode: "no-cors",
+
+        headers: {
+          "Content-Type":
+            "application/x-www-form-urlencoded"
+        },
+
+        body: body.toString()
+      }
+    );
+
+
+    status.textContent =
+      "Ucapan berhasil dikirim.";
+
+    nameInput.value = "";
+
+    messageInput.value = "";
+
+
+    /*
+      Beri waktu Google Apps Script
+      menyimpan data sebelum mengambil
+      data terbaru.
+    */
+
+    setTimeout(
+      loadWishes,
+      1000
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Gagal mengirim ucapan:",
+      error
+    );
+
+
+    status.textContent =
+      "Ucapan gagal dikirim. Silakan coba lagi.";
+
+  }
+
+}
 
 /* =========================================================
    13. KEAMANAN HTML UCAPAN
@@ -827,3 +1023,19 @@ function escapeHtml(value) {
     );
 
 }
+
+/* =========================================================
+   LOAD UCAPAN SAAT HALAMAN DIBUKA
+   ========================================================= */
+
+loadWishes();
+
+
+/* =========================================================
+   UPDATE UCAPAN SETIAP 15 DETIK
+   ========================================================= */
+
+setInterval(
+  loadWishes,
+  15000
+);
