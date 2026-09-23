@@ -155,10 +155,24 @@ a{color:var(--pink);text-decoration:none;}
 /* FLOWER ORNAMENTS */
 .ornament-section{position:relative;overflow:hidden;}
 .ornament{
-  position:absolute;pointer-events:none;opacity:.28;width:190px;z-index:0;
+  position:absolute;
+  pointer-events:none;
+  opacity:.55;
+  width:310px;
+  z-index:0;
+  filter:saturate(1.05);
 }
-.ornament.one{left:-90px;top:-10px;transform:rotate(-10deg);}
-.ornament.two{right:-100px;bottom:-20px;transform:rotate(8deg);}
+.ornament.one{
+  left:-125px;
+  top:-35px;
+  transform:rotate(-10deg);
+}
+
+.ornament.two{
+  right:-135px;
+  bottom:-45px;
+  transform:rotate(8deg);
+}
 .ornament-section .panel,.ornament-section > .eyebrow,.ornament-section > h2{position:relative;z-index:1;}
 
 /* DIGITAL ENVELOPE */
@@ -352,14 +366,59 @@ footer .monogram{font-family:var(--script);font-size:30px;color:var(--pink);}
     <p class="eyebrow">Doa &amp; Ucapan</p>
     <h2 style="font-size:32px;">Ucapan Untuk Mempelai</h2>
 
-    <div id="wishes" style="margin-top:18px;">
-      <div class="panel">
-        <p style="font-size:13px;">
-          Ucapan dari para tamu akan ditampilkan di sini.
-        </p>
-      </div>
-    </div>
-  </section>
+<!-- FORM UCAPAN -->
+<div class="panel" style="margin-top:18px;text-align:left;">
+
+  <label for="wishName">
+    Nama
+  </label>
+
+  <input
+    id="wishName"
+    type="text"
+    placeholder="Nama kamu"
+    autocomplete="name"
+  >
+
+  <label for="wishMessage">
+    Ucapan & doa
+  </label>
+
+  <textarea
+    id="wishMessage"
+    placeholder="Tuliskan ucapan dan doa untuk kedua mempelai..."
+    rows="4"
+  ></textarea>
+
+  <button
+    class="btn solid"
+    type="button"
+    onclick="submitWish()"
+    style="width:100%;"
+  >
+    Kirim Ucapan
+  </button>
+
+  <p
+    id="wishStatus"
+    style="
+      display:none;
+      text-align:center;
+      font-size:12px;
+      margin-top:12px;
+    "
+  ></p>
+
+</div>
+
+
+<!-- DAFTAR UCAPAN -->
+
+<div
+  id="wishes"
+  style="margin-top:18px;"
+>
+</div>
 
   <!-- SHARE -->
   <section class="section">
